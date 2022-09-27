@@ -5,22 +5,19 @@ export default makeStyles({
     border: 'none',
   },
   fullHeightCard: {
-    height: '100%',
+    display: 'flex',
   },
   card: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     borderRadius: '5px',
-    minHeight: '20em',
-    padding: '2.5%',
+    padding: '0.5%',
   },
   overlay: {
     position: 'relative',
     top: '20px',
     left: '20px',
-    right: '20px',
-    bottom: '20px',
     color: '#05668d',
   },
   grid: {
@@ -28,9 +25,9 @@ export default makeStyles({
     justifyContent: 'space-between',
   },
   details: {
-    display: 'flex',
+    display: 'block',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '1em',
     overflowX: 'scroll',
   },
   likeCount: {
@@ -43,7 +40,6 @@ export default makeStyles({
   },
   messageText: {
     display: 'block',
-    textOverflow: 'ellipsis',
   },
   cardActions: {
     color: '#05668d',
@@ -61,7 +57,7 @@ export default makeStyles({
     color: '#adb5bd'
   },
   tags: {
-    display: 'block',
+    paddingTop: '5px',
     color: '#bc4749',
   },
   deleteIcon: {

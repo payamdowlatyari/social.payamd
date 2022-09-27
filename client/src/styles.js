@@ -11,9 +11,9 @@ export default makeStyles(() => ({
   postCard: {
     display: 'block',
     position: 'relative',
-    padding: '2.5%',
     margin: 'auto',
-    minWidth: '15em',
-    minHeight: '20em',
   },
+  postItem: {
+    display: 'block',
+  }
 }));
