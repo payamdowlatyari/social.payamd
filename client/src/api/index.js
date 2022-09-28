@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const url = 'http://localhost:8080';
-const url = 'social-payamd.herokuapp.com';
+const url = 'http://localhost:8080';
+// const url = 'social-payamd.herokuapp.com';
 
 export const login = (data) => axios.post(`${url}/users/login`, data);
 export const signup = (data) => axios.post(`${url}/users/signup`, data); 
