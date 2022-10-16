@@ -7,7 +7,7 @@ import { signup } from '../../actions/auth';
 
 const SignUp = ({ currentId }) => {
   const [userData, setUserData] = useState({ username: '', password: '', firstname: '', lastname: '' });
-  const user = useSelector((state) => (currentId ? state.user.find((message) => message._id === currentId) : null));
+  const user = useSelector((state) => (currentId ? state.user.find((user) => user._id === currentId) : null));
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -15,10 +15,14 @@ const SignUp = ({ currentId }) => {
     if (user) setUserData(user);
   }, [user]);
 
+  const clear = () => {
+    setUserData({ username: '', password: '', firstname: '', lastname: ''});
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (currentId === 0) {
+    if (!currentId) {
       dispatch(signup(userData));
       clear();
     } 
@@ -29,10 +33,10 @@ const SignUp = ({ currentId }) => {
       <form autoComplete="on" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
 
       <div className={classes.formGroup}>
-        <TextField name="firstname" variant="outlined" label="First Name" size="small" value={userData.firstname} onChange={(e) => setUserData({ ...userData, firstname: e.target.value })} />
-        <TextField name="lastname" variant="outlined" label="Last Name" size="small" value={userData.lastname} onChange={(e) => setUserData({ ...userData, lastname: e.target.value })} />
-        <TextField name="username" variant="outlined" label="Username" size="small" value={userData.username} onChange={(e) => setUserData({ ...userData, username: e.target.value })} />
-        <TextField name="password" variant="outlined" label="Password" size="small" value={userData.password} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+        <TextField name="firstname" variant="standard" label="First Name" size="small" value={userData.firstname} onChange={(e) => setUserData({ ...userData, firstname: e.target.value })} />
+        <TextField name="lastname" variant="standard" label="Last Name" size="small" value={userData.lastname} onChange={(e) => setUserData({ ...userData, lastname: e.target.value })} />
+        <TextField name="username" variant="standard" label="Username" size="small" value={userData.username} onChange={(e) => setUserData({ ...userData, username: e.target.value })} />
+        <TextField name="password" variant="standard" label="Password" size="small" value={userData.password} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
       </div>
         <div className={classes.buttons}>
             <Button className={classes.buttonSubmit} variant="contained" size="small" type="submit">Sign Up</Button>

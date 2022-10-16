@@ -1,3 +1,11 @@
 body {
     background-color: #233d4d;
 }
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    transition: 0.2s;
+}

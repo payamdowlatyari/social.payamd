@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
-  border: {
-    border: 'none',
-  },
   fullHeightCard: {
     display: 'flex',
   },
@@ -13,22 +10,22 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '5px',
     padding: '0.5%',
+    margin: '10px',
+    marginTop: '5px',
   },
   overlay: {
     position: 'relative',
     top: '20px',
     left: '20px',
-    color: '#05668d',
   },
   grid: {
     display: 'flex',
     justifyContent: 'space-between',
   },
   details: {
-    display: 'block',
+    display: 'flex',
     justifyContent: 'space-between',
     margin: '1em',
-    overflowX: 'scroll',
   },
   likeCount: {
     paddingRight: '5px',
@@ -44,8 +41,7 @@ export default makeStyles({
   cardActions: {
     color: '#05668d',
     padding: '8px 16px 8px',
-    display: 'flex',
-    justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
   createdBy:{
     fontSize: '1em',

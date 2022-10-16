@@ -8,8 +8,8 @@ export default makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
-    width: '100%',
     margin: '0 auto',
+    border: 'none'
   },
   form: {
     display: 'flex',
@@ -17,26 +17,26 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
   },
   buttonSubmit: {
-    minWidth: '150px',
-    margin: 5,
+    minWidth: '12em',
+    margin: '5px',
     backgroundColor: '#2ec4b6',
     color: '#fff',
   },
   buttonClear: {
-    minWidth: '150px',
-    margin: 5,
+    minWidth: '12em',
+    margin:'5px',
     backgroundColor: '#e07a5f',
     color: '#fff',
   },
   buttons: {
-    display: 'inline-block',
+    display: 'flex-start',
+    margin: 'auto'
   },
   formTitle: {
-    margin: 'auto',
     fontSize: '1.2em',
+    padding: '1em'
   },
   formGroup: {
     margin: 'auto',
-    display: 'block',
   }
 }));

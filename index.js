@@ -11,15 +11,13 @@ import userRoutes from './routes/users.js';
 dotenv.config();
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:3000/'
-}));
 
-app.use('/posts', postRoutes);
-app.use('/users', userRoutes);
+app.use(cors({origin: "*"}));
 
-app.use(bodyParser.json({ limit: '30mb', extended: true }))
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
+app.use(bodyParser.json({ type: '*/*' }));  // middleware for helping parse incoming HTTP requests
+
+app.use(bodyParser.json({ limit: '30mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,19 +28,28 @@ app.use((req, res, next) => {
 
 const CONNECTION_URL = process.env.MONGODB_CONNECTION_STRING;
 const PORT = process.env.PORT|| 8080;
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+if (process.env.NODE_ENV === "production") {
+app.use(express.static(path.resolve(__dirname, "./client")));
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client", "index.html"));
 });
+}
 
 mongoose.connect(CONNECTION_URL, 
-  { useNewUrlParser: true, 
+  { 
+    useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true, 
     useFindAndModify: false 
   })
-  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+  .then(() => app.listen(PORT, () => console.log(`🚀 Server is running on http://localhost:${PORT} 🚀 `)))
   .catch((error) => console.log(`${error} did not connect`));
+  
+
+  app.use('/posts', postRoutes);
+  app.use('/users', userRoutes);

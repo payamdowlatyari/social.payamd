@@ -2,110 +2,131 @@ import express from 'express';
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt  from "jsonwebtoken";
+// import asyncHandler from 'express-async-handler';
 
 const router = express.Router();
 
-export const getUser = async (req, res) => { 
-    const { id } = req.params;
+// export const getUsers = asyncHandler(async (req, res) => { 
 
-    try {
-        const user = await User.findById(id);
-        
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
+//   try {
+//       const users = await User.find();
+
+//       console.log(users);
+              
+//       res.status(200).json(users);
+//   } catch (error) {
+//       res.status(404).json({ message: error.message });
+//   }
+// });
+
+
+// export const getUser = asyncHandler(async (req, res) => { 
+
+//   const id  = req.params.id;
+//   console.log(id);
+//   // if (id.match(/^[0-9a-fA-F]{24}$/)) {
+//     try {
+//         const user = await User.findById(id);      
+//         res.status(200).json(user);
+
+//     } catch (error) {
+//         res.status(404).json({ message: error.message });
+//     }
+//   // }
+// });
+
+// export async function readUserById(req, res) {
+//   const id = req.params.userId;
+//   try {
+//     const user = await User.findById(id);   
+//     res.status(200).send({
+//       status: 200,
+//       response: user,
+//     });
+//   } catch (error) {
+//     res.status(500).send({
+//       status: 500,
+//       message: `Something wen't wrong`,
+//     });
+//   }
+// }
 
 export const signup = async (req, res) => {
 
-    const { email, password, firstname, lastname } = req.body;
+    console.log(req.body);
+
+    const email = req.body.username;
+    const password = req.body.password;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
 
     if (!email || !password) {
-        return res.status(422).send({ message: 'You must provide both email and password.' });  // 422 refers to unprocessable entity
+        return res.status(422).send({ message: 'You must provide email and password!' });  
       }
 
-    // See if a user with given email exists
     User.findOne({ email: email }, async (err, existingUser) => {
   
       if (err) {
         return next(err);
       }
   
-      // If a user with email does exist, return an error
       if (existingUser) {
-        return res.status(422).send({ message: 'This email is in use.' });  // 422 refers to unprocessable entity
+        return res.status(422).send({ message: 'This email has an account!' });  
       }
 
-      //generate new password
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(req.body.password, salt)
-  
-        const newUser = new User({ email, hashedPassword, firstname, lastname });
-
+      const result = new User({ firstname, lastname , email, password: hashedPassword });
+      const token = createAccessToken({id: result._id, email: result.email});
+        
         try {
-            await newUser.save();
-            res.status(201).json(newUser);
+            await result.save();
+            res.status(201).json(result, token);
         } 
         catch (error) {
-            res.status(409).json({ message: error.message });
+            res.status(500).json({ message: "Something went wrong!" });
         }
 
     });
 }
 
-// log in
 export const login = async (req, res) => {
 
+    console.log(req.body)
+
     try {
-        const { email, password } = req.body;
+        const email = req.body.username;
+        const password = req.body.password;
   
-      // validate
       if (!email || !password)
             return res
             .status(400)
-            .json({ errorMessage: "Please enter all required fields." });
+            .json({ errorMessage: "Please enter all required fields!" });
   
       const existingUser = await User.findOne({ email });
 
       if (!existingUser)
-        return res.status(401).json({ errorMessage: "Wrong email or password." });
+        return res.status(401).json({ errorMessage: "Wrong email or password!" });
  
       const passwordCorrect = await bcrypt.compare( password, existingUser.password);
 
       if (!passwordCorrect)
-        return res.status(401).json({ errorMessage: "Wrong email or password." });
+        return res.status(401).json({ errorMessage: "Wrong email or password!" });
   
-      // sign the token
-      const token = jwt.sign({user: existingUser._id,},process.env.JWT_SECRET);
-  
-      // send the token in a HTTP-only cookie
-        res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none",}).send();
+      const token = createAccessToken({id: existingUser._id, email: existingUser.email})
+      // const username = existingUser.firstname;
 
+      res.status(200).json({ result: existingUser, token, });
+  
     } catch (err) {
             console.error(err);
             res.status(500).send();
     }
 }
-  
-// logout
-export const logout = (req, res) => {
-    res.cookie("token", "", { httpOnly: true, expires: new Date(0), secure: true, sameSite: "none",}).send();
-}
-  
-// loggedIn
-export const loggedIn = (req, res) => {
-    try {
-      const token = req.cookies.token;
 
-      if (!token) return res.json(false);
-            jwt.verify(token, process.env.JWT_SECRET);
   
-            res.send(true);
+const createAccessToken = (payload) => {
+  return jwt.sign({payload},process.env.JWT_SECRET);
+};
 
-    } catch (err) {
-            res.json(false);
-    }
-}
-  
 export default router;
