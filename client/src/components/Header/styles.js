@@ -1,21 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
-    borderRadius: 15,
-    margin: '30px 0',
+    borderRadius: 5,
+    margin: '0',
     display: 'flex',
+    border: 'none',
+    boxShadow: 'none',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 50px',
+    padding: '10px 20px',
+    backgroundColor: "#233d4d",
+    color: '#fff',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
+      flexDirection: 'row',
     },
   },
   heading: {
-    color: theme.palette.primary.main,
     textDecoration: 'none',
     fontSize: '2em',
     fontWeight: 300,
@@ -33,30 +34,27 @@ export default makeStyles((theme) => ({
     },
   },
   profile: {
-    display: 'flex',
+    display: 'contents',
     justifyContent: 'space-between',
     width: '400px',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-      marginTop: 20,
+      marginTop: 5,
       justifyContent: 'center',
     },
   },
   logout: {
     marginLeft: '20px',
   },
-  userName: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
+    fontSize: '2em',
+    color: '#eee',
+    textTransform: 'uppercase',
   },
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
-  },
+  menu : {
+    color: '#eee',
+    position: 'absolute',
+  }
 }));

@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     margin: '0 auto',
-    border: 'none'
+    border: 'none',
   },
   form: {
     display: 'flex',
@@ -17,26 +17,25 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
   },
   buttonSubmit: {
-    minWidth: '12em',
-    margin: '5px',
+    minWidth: '10em',
+    margin: '10px',
     backgroundColor: '#2ec4b6',
     color: '#fff',
   },
   buttonClear: {
-    minWidth: '12em',
+    minWidth: '10em',
     margin:'5px',
     backgroundColor: '#e07a5f',
     color: '#fff',
   },
   buttons: {
-    display: 'flex-start',
-    margin: 'auto'
+    margin: '0 auto'
   },
   formTitle: {
-    fontSize: '1.2em',
-    padding: '1em'
+    fontSize: '1em',
   },
   formGroup: {
     margin: 'auto',
+    padding: '10px',
   }
 }));

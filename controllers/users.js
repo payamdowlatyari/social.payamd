@@ -5,7 +5,7 @@ import jwt  from "jsonwebtoken";
 // import asyncHandler from 'express-async-handler';
 
 const router = express.Router();
-
+const secret = "theresnosecrect";
 // export const getUsers = asyncHandler(async (req, res) => { 
 
 //   try {
@@ -55,7 +55,7 @@ export const signup = async (req, res) => {
 
     console.log(req.body);
 
-    const email = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
@@ -81,7 +81,7 @@ export const signup = async (req, res) => {
         
         try {
             await result.save();
-            res.status(201).json(result, token);
+            res.status(201).json({result, token});
         } 
         catch (error) {
             res.status(500).json({ message: "Something went wrong!" });
@@ -95,7 +95,7 @@ export const login = async (req, res) => {
     console.log(req.body)
 
     try {
-        const email = req.body.username;
+        const email = req.body.email;
         const password = req.body.password;
   
       if (!email || !password)
@@ -126,7 +126,7 @@ export const login = async (req, res) => {
 
   
 const createAccessToken = (payload) => {
-  return jwt.sign({payload},process.env.JWT_SECRET);
+  return jwt.sign(payload,secret);
 };
 
 export default router;

@@ -76,7 +76,8 @@ export const getPostsByCreator = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
 
-    const newPostMessage = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
+    console.log(post);
+    const newPostMessage = new PostMessage({ ...post, createdAt: new Date().toISOString() })
 
     try {
         await newPostMessage.save();
@@ -167,6 +168,8 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
     const { id } = req.params;
 
+    console.log(req.userId);
+
     if (!req.userId) {
         return res.json({ message: "Unauthenticated" });
       }
@@ -175,12 +178,16 @@ export const likePost = async (req, res) => {
     
     const post = await PostMessage.findById(id);
 
-    const index = post.likes.findIndex((id) => id ===String(req.userId));
+    console.log(post)
+
+    if (post.likedBy == null || post.likedBy === undefined) post.likedBy = [];
+
+    const index = post.likedBy.findIndex((id) => id ===String(req.userId));
 
     if (index === -1) {
-      post.likes.push(req.userId);
+      post.likedBy.push(req.userId);
     } else {
-      post.likes = post.likes.filter((id) => id !== String(req.userId));
+      post.likedBy = post.likedBy.filter((id) => id !== String(req.userId));
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });

@@ -42,29 +42,3 @@ export default (state = { isLoading: true, posts: [] }, action) => {
 };
 
 
-
-// const initialState = {
-//   posts: [],
-//   post: null,
-//   loading: true,
-//   error: {}
-// };
-
-// export default (state = initialState , action) => {
-//   const {type, payload} = action;
-//   switch (type) {
-//     case FETCH_ALL:
-//       return payload;
-//     case LIKE:
-//       return state.posts.map((post) => (post._id === payload._id ? payload : post));
-//     case CREATE:
-//       return [...state.posts, payload];
-//     case UPDATE:
-//       return state.posts.map((post) => (post._id === payload._id ? payload : post));
-//     case DELETE:
-//       return state.posts.filter((post) => post._id !== payload);
-//     default:
-//       return state;
-//   }
-// };
-

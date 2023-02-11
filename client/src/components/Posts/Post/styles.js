@@ -28,7 +28,6 @@ export default makeStyles({
     margin: '1em',
   },
   likeCount: {
-    paddingRight: '5px',
     color: '#05668d',
   },
   title: {
